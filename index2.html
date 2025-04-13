@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Safety Tips & Chat Assistant</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background-color: #f2f2f2; }
+        h1 { color: #333; }
+        #tips { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        #chat { background: #fff; padding: 20px; border-radius: 8px; }
+        input, button { padding: 10px; margin-top: 10px; }
+        .message { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🛡️ Safety Tips & Assistant</h1>
+
+    <div id="tips">
+        <h3>🚨 Basic Safety Tips:</h3>
+        <ul>
+            <li>Always share your live location with trusted contacts.</li>
+            <li>Keep emergency contacts updated in your phone.</li>
+            <li>Stay alert in unknown areas, especially at night.</li>
+            <li>Use the SOS button in our app in any emergency.</li>
+        </ul>
+    </div>
+
+    <div id="chat">
+        <h3>🤖 Chat with Safety Assistant</h3>
+        <div id="chatBox"></div>
+        <input type="text" id="userInput" placeholder="Ask something like 'what to do when I feel unsafe'...">
+        <button onclick="respond()">Send</button>
+    </div>
+
+    <script>
+        function respond() {
+            const input = document.getElementById("userInput").value.toLowerCase();
+            const box = document.getElementById("chatBox");
+            let reply = "Sorry, I don't understand.";
+
+            if (input.includes("unsafe") || input.includes("help")) {
+                reply = "If you're feeling unsafe, move to a public area, call a friend, or press the SOS button.";
+            } else if (input.includes("tips")) {
+                reply = "Always keep your phone charged and avoid dark or isolated areas.";
+            } else if (input.includes("sos")) {
+                reply = "Press the SOS button on the home screen to alert your emergency contacts and share location.";
+            }
+
+            box.innerHTML += `<div class="message"><strong>You:</strong> ${input}</div>`;
+            box.innerHTML += `<div class="message"><strong>Assistant:</strong> ${reply}</div>`;
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+</body>
+</html>

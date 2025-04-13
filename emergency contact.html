@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emergency Contacts - Community Safety Hub</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #d32f2f;
+    }
+    .contact-form {
+      margin-bottom: 20px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .contact-form input {
+      margin: 5px 0;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .contact-form button {
+      padding: 10px 15px;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    ul#contactList {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul#contactList li {
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    ul#contactList li button {
+      background: #388e3c;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1><i class="fas fa-user-shield"></i> Emergency Contacts</h1>
+
+  <div class="contact-form">
+    <input type="text" id="contactName" placeholder="Contact Name" required />
+    <input type="tel" id="contactPhone" placeholder="Phone Number" required />
+    <button onclick="addContact()">Add Contact</button>
+  </div>
+
+  <ul id="contactList"></ul>
+
+  <script>
+    // Load contacts on page load
+    window.onload = function () {
+      loadContacts();
+    };
+
+    function addContact() {
+      const name = document.getElementById("contactName").value.trim();
+      const phone = document.getElementById("contactPhone").value.trim();
+
+      if (!name || !phone) {
+        alert("Please enter both name and phone number.");
+        return;
+      }
+
+      const contact = { name, phone };
+      let contacts = JSON.parse(localStorage.getItem("emergencyContacts")) || [];
+      contacts.push(contact);
+      localStorage.setItem("emergencyContacts", JSON.stringify(contacts));
+
+      document.getElementById("contactName").value = "";
+      document.getElementById("contactPhone").value = "";
+      loadContacts();
+    }
+
+    function loadContacts() {
+      const list = document.getElementById("contactList");
+      list.innerHTML = "";
+      const contacts = JSON.parse(localStorage.getItem("emergencyContacts")) || [];
+
+      contacts.forEach((contact, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span><strong>${contact.name}</strong><br>${contact.phone}</span>
+          <a href="tel:${contact.phone}"><button><i class="fas fa-phone"></i> Call</button></a>
+        `;
+        list.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Webcam Safety Scan</title>
+</head>
+<body>
+    <h1>📸 Webcam Safety Check</h1>
+    <video id="webcam" autoplay playsinline width="320" height="240"></video>
+    <canvas id="snapshotCanvas" width="320" height="240" style="display:none;"></canvas><br>
+    <button onclick="capture()">Capture Snapshot</button>
+    <button onclick="download()">Download Snapshot</button>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('snapshotCanvas');
+        const context = canvas.getContext('2d');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => video.srcObject = stream)
+            .catch(err => alert("Webcam access denied"));
+
+        function capture() {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.style.display = 'block';
+        }
+
+        function download() {
+            const link = document.createElement('a');
+            link.download = 'snapshot.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

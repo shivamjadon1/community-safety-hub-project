@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Community Safety Hub</title>
+</head>
+<body>
+  <h1>Login</h1>
+  <form onsubmit="loginUser(); return false;">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" required /><br><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" required /><br><br>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    function loginUser() {
+      const inputUser = document.getElementById("username").value;
+      const inputPass = document.getElementById("password").value;
+      const regUser = localStorage.getItem("registeredUser");
+      const regPass = localStorage.getItem("registeredPass");
+
+      if (inputUser === regUser && inputPass === regPass) {
+        localStorage.setItem("loggedIn", "true");
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } else {
+        alert("Incorrect credentials. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html>
